@@ -93,6 +93,7 @@
   position: relative;
   width: calc(100vw - 20px);
   height: calc(100vh - 120px);
+  /* 📚 LEARNING: Default background - will be overridden by dynamic gradient */
   background: var(--background-card);
   border: 2px dashed rgba(0, 212, 255, 0.3);
   border-radius: var(--border-radius);
@@ -114,10 +115,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, 
-    var(--background-card) 0%, 
-    rgba(0, 212, 255, 0.02) 50%, 
-    var(--background-card) 100%);
+  /* 📚 LEARNING: Empty state background is now handled by dynamic gradient state */
+  /* The default gradient will be applied via inline styles from React state */
 }
 
 /* Empty State */

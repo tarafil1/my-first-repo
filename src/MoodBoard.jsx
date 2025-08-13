@@ -21,6 +21,9 @@ function MoodBoard() {
   // 📚 LEARNING: State for export dropdown visibility
   const [showExportDropdown, setShowExportDropdown] = useState(false)
   
+  // 📚 LEARNING: State for dynamic background gradient based on image colors
+  const [backgroundGradient, setBackgroundGradient] = useState('linear-gradient(145deg, var(--background-card) 0%, rgba(0, 212, 255, 0.02) 50%, var(--background-card) 100%)')
+  
   const boardRef = useRef(null)
 
   // 📚 LEARNING: Keyboard event listener for deleting selected images
@@ -46,6 +49,157 @@ function MoodBoard() {
       document.removeEventListener('keydown', handleKeyDown)
     }
   }, [selectedImage]) // Re-run effect when selectedImage changes
+
+  // 📚 LEARNING: Extract dominant colors from an image using Canvas API
+  const extractImageColors = (imageSrc) => {
+    return new Promise((resolve) => {
+      console.log('🎨 Extracting colors from image:', imageSrc.substring(0, 50) + '...')
+      
+      const img = new Image()
+      // 📚 LEARNING: Only set crossOrigin for external URLs, not for data URLs
+      if (!imageSrc.startsWith('data:')) {
+        img.crossOrigin = 'anonymous' // Handle CORS for external images
+      }
+      
+      img.onload = () => {
+        console.log('🎨 Image loaded successfully, size:', img.width, 'x', img.height)
+        // Create a canvas to analyze the image
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
+        
+        // Set canvas size (smaller for faster processing)
+        const maxSize = 100
+        const ratio = Math.min(maxSize / img.width, maxSize / img.height)
+        canvas.width = img.width * ratio
+        canvas.height = img.height * ratio
+        
+        // Draw image on canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        
+        // Get image data (pixel information)
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        const data = imageData.data
+        
+        // Count color frequency
+        const colorMap = {}
+        
+        // Sample every 4th pixel for performance (skip some pixels)
+        for (let i = 0; i < data.length; i += 16) { // Skip more pixels for speed
+          const r = data[i]
+          const g = data[i + 1] 
+          const b = data[i + 2]
+          const alpha = data[i + 3]
+          
+          // Skip transparent pixels
+          if (alpha < 128) continue
+          
+          // Round colors to reduce noise (group similar colors together)
+          const roundedR = Math.round(r / 32) * 32
+          const roundedG = Math.round(g / 32) * 32
+          const roundedB = Math.round(b / 32) * 32
+          
+          const colorKey = `${roundedR},${roundedG},${roundedB}`
+          colorMap[colorKey] = (colorMap[colorKey] || 0) + 1
+        }
+        
+        // Find the most frequent colors
+        const sortedColors = Object.entries(colorMap)
+          .sort(([,a], [,b]) => b - a) // Sort by frequency
+          .slice(0, 3) // Take top 3 colors
+          .map(([color]) => {
+            const [r, g, b] = color.split(',').map(Number)
+            return `rgb(${r}, ${g}, ${b})`
+          })
+        
+        // If we don't have enough colors, add some defaults
+        while (sortedColors.length < 3) {
+          sortedColors.push('rgb(128, 128, 128)') // Neutral gray
+        }
+        
+        console.log('🎨 Extracted colors for this image:', sortedColors)
+        resolve(sortedColors)
+      }
+      
+      img.onerror = (error) => {
+        // If image fails to load, return neutral colors
+        console.log('🎨 Error loading image for color extraction:', error)
+        console.log('🎨 Image src was:', imageSrc.substring(0, 100) + '...')
+        resolve(['rgb(128, 128, 128)', 'rgb(96, 96, 96)', 'rgb(160, 160, 160)'])
+      }
+      
+      img.src = imageSrc
+    })
+  }
+
+  // 📚 LEARNING: Create a gradient from multiple color arrays
+  const generateGradientFromColors = (allColors) => {
+    if (allColors.length === 0) {
+      // Return default gradient when no images
+      return 'linear-gradient(145deg, var(--background-card) 0%, rgba(0, 212, 255, 0.02) 50%, var(--background-card) 100%)'
+    }
+    
+    // Flatten all colors into one array
+    const flatColors = allColors.flat()
+    
+    // Remove duplicates and limit to 6 colors for performance
+    const uniqueColors = [...new Set(flatColors)].slice(0, 6)
+    
+    if (uniqueColors.length === 0) {
+      return 'linear-gradient(145deg, var(--background-card) 0%, rgba(0, 212, 255, 0.02) 50%, var(--background-card) 100%)'
+    }
+    
+    // Create gradient with much more intense colors
+    const gradientStops = uniqueColors.map((color, index) => {
+      const position = (index / (uniqueColors.length - 1)) * 100
+      // Extract RGB values and add much higher opacity for dramatic effect
+      const rgbMatch = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/)
+      if (rgbMatch) {
+        const [, r, g, b] = rgbMatch
+        // Mix the extracted color with dark gray for better visibility
+        const mixedR = Math.round(r * 0.6 + 30 * 0.4) // 60% image color, 40% dark base
+        const mixedG = Math.round(g * 0.6 + 30 * 0.4)
+        const mixedB = Math.round(b * 0.6 + 30 * 0.4)
+        return `rgba(${mixedR}, ${mixedG}, ${mixedB}, 0.4) ${position}%`
+      }
+      return `${color}60 ${position}%` // Fallback with higher opacity
+    }).join(', ')
+    
+    // Create a much more visible gradient with lighter base
+    return `linear-gradient(145deg, 
+      rgba(25, 25, 25, 0.8) 0%, 
+      ${gradientStops}, 
+      rgba(25, 25, 25, 0.8) 100%)`
+  }
+
+  // 📚 LEARNING: Update background when images change
+  useEffect(() => {
+    const updateBackground = async () => {
+      console.log('🎨 Updating background, images count:', images.length)
+      
+      if (images.length === 0) {
+        // Reset to default when no images
+        console.log('🎨 No images, resetting to default gradient')
+        setBackgroundGradient('linear-gradient(145deg, var(--background-card) 0%, rgba(0, 212, 255, 0.02) 50%, var(--background-card) 100%)')
+        return
+      }
+      
+      console.log('🎨 Extracting colors from', images.length, 'images')
+      
+      // Extract colors from all images
+      const colorPromises = images.map(image => extractImageColors(image.src))
+      const allImageColors = await Promise.all(colorPromises)
+      
+      console.log('🎨 Extracted colors:', allImageColors)
+      
+      // Generate new gradient
+      const newGradient = generateGradientFromColors(allImageColors)
+      console.log('🎨 Generated gradient:', newGradient)
+      
+      setBackgroundGradient(newGradient)
+    }
+    
+    updateBackground()
+  }, [images]) // Run when images array changes
 
   // 📚 LEARNING: Handle drag over event (required for drop to work)
   const handleDragOver = (e) => {
@@ -329,6 +483,10 @@ function MoodBoard() {
       <div 
         ref={boardRef}
         className={`moodboard-canvas ${images.length === 0 ? 'empty' : ''}`}
+        style={{
+          background: backgroundGradient,
+          transition: 'background 0.8s ease-in-out' // Smooth gradient transitions
+        }}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onMouseMove={handleMouseMove}
