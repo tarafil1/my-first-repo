@@ -1,14 +1,15 @@
-/* 🎴 Card Game Styling */
+/* 🎴 Card Game Styling - Dark Mode Theme */
 
 .card-game {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
   border-radius: 20px;
-  color: white;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  color: #e0e0e0;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* 📊 Game Header Styling */
@@ -20,7 +21,11 @@
 .game-header h2 {
   margin: 0 0 20px 0;
   font-size: 2.5em;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .game-stats {
@@ -33,7 +38,7 @@
 }
 
 .new-game-btn {
-  background: #ff6b6b;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
   color: white;
   border: none;
   padding: 12px 24px;
@@ -42,24 +47,27 @@
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .new-game-btn:hover {
-  background: #ff5252;
+  background: linear-gradient(135deg, #ff5252 0%, #c44569 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
 }
 
 /* 🏆 Win Message Styling */
 .win-message {
   text-align: center;
-  background: rgba(255, 255, 255, 0.9);
-  color: #333;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.9) 0%, rgba(238, 90, 36, 0.9) 100%);
+  color: white;
   padding: 20px;
   border-radius: 15px;
   margin: 20px 0;
   animation: celebrationPulse 1s ease-in-out infinite alternate;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
 }
 
 .win-message h3 {
@@ -79,9 +87,10 @@
   gap: 15px;
   margin: 30px 0;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 15px;
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* 🎴 Individual Card Styling */
@@ -110,20 +119,22 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Card Front (Face Down) */
+/* Card Front (Face Down) - Dark Theme */
 .card-front {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  color: white;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: #ecf0f1;
   transform: rotateY(0deg); /* Initially visible */
-  border: 3px solid rgba(255, 255, 255, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
-/* Card Back (Face Up) */
+/* Card Back (Face Up) - Dark Theme */
 .card-back {
-  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-  color: #333;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
   transform: rotateY(180deg); /* Initially hidden */
-  border: 3px solid rgba(255, 255, 255, 0.5);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
 /* 🔄 Flipped Card Animation */
@@ -135,28 +146,29 @@
   transform: rotateY(0deg); /* Show back */
 }
 
-/* ✅ Matched Card Styling */
+/* ✅ Matched Card Styling - Dark Theme */
 .card.matched .card-front {
   transform: rotateY(-180deg);
 }
 
 .card.matched .card-back {
   transform: rotateY(0deg);
-  background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%);
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
   animation: matchedGlow 0.8s ease-in-out;
+  border: 3px solid rgba(46, 204, 113, 0.5);
 }
 
 @keyframes matchedGlow {
   0% { 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     transform: rotateY(0deg) scale(1);
   }
   50% { 
-    box-shadow: 0 8px 25px rgba(168, 230, 207, 0.6);
+    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.8);
     transform: rotateY(0deg) scale(1.1);
   }
   100% { 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     transform: rotateY(0deg) scale(1);
   }
 }
@@ -173,13 +185,14 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* 📋 Game Instructions */
+/* 📋 Game Instructions - Dark Theme */
 .game-instructions {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.3);
   padding: 20px;
   border-radius: 15px;
   margin-top: 20px;
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .game-instructions h4 {
@@ -197,9 +210,10 @@
 .game-instructions li {
   margin: 8px 0;
   padding: 8px 15px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   border-left: 4px solid #ff6b6b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* 📱 Responsive Design for Mobile */
