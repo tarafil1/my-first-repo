@@ -3,6 +3,7 @@ import './App.css'
 import SnakeGame from './SnakeGame'
 import TetrisGame from './TetrisGame'
 import RockPaperScissors from './RockPaperScissors'
+import CardGame from './CardGame'
 
 function App() {
   // 📚 LEARNING: Tab system state management
@@ -55,12 +56,13 @@ function App() {
                 <li>🐍 Snake Game for fun!</li>
                 <li>🧩 Tetris Game</li>
                 <li>🪨📄✂️ Rock Paper Scissors - NEW!</li>
+                <li>🎴 Memory Card Game - NEW!</li>
               </ul>
             </div>
 
             <div className="next-steps">
               <h2>🚀 Next Steps</h2>
-              <p>Try all three games: Snake, Tetris, and the brand new Rock Paper Scissors!</p>
+              <p>Try all four games: Snake, Tetris, Rock Paper Scissors, and the brand new Memory Card game!</p>
             </div>
           </main>
         )
@@ -73,6 +75,9 @@ function App() {
       
       case 'rockpaperscissors':
         return <RockPaperScissors />
+      
+      case 'cards':
+        return <CardGame />
       
       default:
         return <div>Tab not found</div>
@@ -114,6 +119,12 @@ function App() {
           onClick={() => handleTabClick('rockpaperscissors')}
         >
           🪨📄✂️ Rock Paper Scissors
+        </button>
+        <button 
+          className={`tab-button ${activeTab === 'cards' ? 'active' : ''}`}
+          onClick={() => handleTabClick('cards')}
+        >
+          🎴 Card Game
         </button>
       </nav>
 

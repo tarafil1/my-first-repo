@@ -1,0 +1,256 @@
+/* 🎴 Card Game Styling - Dark Mode Theme */
+
+.card-game {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  border-radius: 20px;
+  color: #e0e0e0;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 📊 Game Header Styling */
+.game-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.game-header h2 {
+  margin: 0 0 20px 0;
+  font-size: 2.5em;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.game-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px 0;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.new-game-btn {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.new-game-btn:hover {
+  background: linear-gradient(135deg, #ff5252 0%, #c44569 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+}
+
+/* 🏆 Win Message Styling */
+.win-message {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.9) 0%, rgba(238, 90, 36, 0.9) 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 20px 0;
+  animation: celebrationPulse 1s ease-in-out infinite alternate;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+}
+
+.win-message h3 {
+  margin: 0 0 10px 0;
+  font-size: 2em;
+}
+
+@keyframes celebrationPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+/* 🎯 Game Board - Grid Layout */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 15px;
+  margin: 30px 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 🎴 Individual Card Styling */
+.card {
+  width: 100px;
+  height: 120px;
+  position: relative;
+  cursor: pointer;
+  perspective: 1000px; /* Needed for 3D flip effect */
+}
+
+/* Card Front and Back - Shared Styles */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  backface-visibility: hidden; /* Hide back face during flip */
+  transition: transform 0.6s ease-in-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Front (Face Down) - Dark Theme */
+.card-front {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: #ecf0f1;
+  transform: rotateY(0deg); /* Initially visible */
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+/* Card Back (Face Up) - Dark Theme */
+.card-back {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: rotateY(180deg); /* Initially hidden */
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+/* 🔄 Flipped Card Animation */
+.card.flipped .card-front {
+  transform: rotateY(-180deg); /* Hide front */
+}
+
+.card.flipped .card-back {
+  transform: rotateY(0deg); /* Show back */
+}
+
+/* ✅ Matched Card Styling - Dark Theme */
+.card.matched .card-front {
+  transform: rotateY(-180deg);
+}
+
+.card.matched .card-back {
+  transform: rotateY(0deg);
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  animation: matchedGlow 0.8s ease-in-out;
+  border: 3px solid rgba(46, 204, 113, 0.5);
+}
+
+@keyframes matchedGlow {
+  0% { 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transform: rotateY(0deg) scale(1);
+  }
+  50% { 
+    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.8);
+    transform: rotateY(0deg) scale(1.1);
+  }
+  100% { 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+/* 🎯 Card Hover Effects */
+.card:hover .card-front {
+  transform: rotateY(-10deg) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card.flipped:hover .card-back,
+.card.matched:hover .card-back {
+  transform: rotateY(0deg) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 📋 Game Instructions - Dark Theme */
+.game-instructions {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.game-instructions h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.game-instructions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-instructions li {
+  margin: 8px 0;
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid #ff6b6b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 📱 Responsive Design for Mobile */
+@media (max-width: 600px) {
+  .card-game {
+    padding: 15px;
+    margin: 10px;
+  }
+  
+  .game-board {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on mobile */
+    gap: 10px;
+    padding: 15px;
+  }
+  
+  .card {
+    width: 80px;
+    height: 100px;
+  }
+  
+  .card-front,
+  .card-back {
+    font-size: 2em;
+  }
+  
+  .game-stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .game-header h2 {
+    font-size: 2em;
+  }
+}
+
+/* 🎨 Symbol Styling */
+.card-symbol {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  user-select: none; /* Prevent text selection */
+}
