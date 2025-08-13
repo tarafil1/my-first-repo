@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import SnakeGame from './SnakeGame'
 import TetrisGame from './TetrisGame'
+import CardGame from './CardGame'
 
 function App() {
   // 📚 LEARNING: Tab system state management
@@ -52,13 +53,14 @@ function App() {
                 <li>🎨 CSS styling ready for customization</li>
                 <li>🔧 ESLint for code quality</li>
                 <li>🐍 Snake Game for fun!</li>
-                <li>🧩 Tetris Game - NEW!</li>
+                <li>🧩 Tetris Game</li>
+                <li>🎴 Memory Card Game - NEW!</li>
               </ul>
             </div>
 
             <div className="next-steps">
               <h2>🚀 Next Steps</h2>
-              <p>Try the Snake game and the brand new Tetris game!</p>
+              <p>Try the Snake game, Tetris, and the brand new Memory Card game!</p>
             </div>
           </main>
         )
@@ -68,6 +70,9 @@ function App() {
       
       case 'tetris':
         return <TetrisGame />
+      
+      case 'cards':
+        return <CardGame />
       
       default:
         return <div>Tab not found</div>
@@ -103,6 +108,12 @@ function App() {
           onClick={() => handleTabClick('tetris')}
         >
           🧩 Tetris Game
+        </button>
+        <button 
+          className={`tab-button ${activeTab === 'cards' ? 'active' : ''}`}
+          onClick={() => handleTabClick('cards')}
+        >
+          🎴 Card Game
         </button>
       </nav>
 

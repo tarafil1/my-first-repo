@@ -1,0 +1,242 @@
+/* 🎴 Card Game Styling */
+
+.card-game {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 📊 Game Header Styling */
+.game-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.game-header h2 {
+  margin: 0 0 20px 0;
+  font-size: 2.5em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.game-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px 0;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.new-game-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.new-game-btn:hover {
+  background: #ff5252;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+/* 🏆 Win Message Styling */
+.win-message {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 20px 0;
+  animation: celebrationPulse 1s ease-in-out infinite alternate;
+}
+
+.win-message h3 {
+  margin: 0 0 10px 0;
+  font-size: 2em;
+}
+
+@keyframes celebrationPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+/* 🎯 Game Board - Grid Layout */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 15px;
+  margin: 30px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+/* 🎴 Individual Card Styling */
+.card {
+  width: 100px;
+  height: 120px;
+  position: relative;
+  cursor: pointer;
+  perspective: 1000px; /* Needed for 3D flip effect */
+}
+
+/* Card Front and Back - Shared Styles */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  backface-visibility: hidden; /* Hide back face during flip */
+  transition: transform 0.6s ease-in-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Front (Face Down) */
+.card-front {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  transform: rotateY(0deg); /* Initially visible */
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Card Back (Face Up) */
+.card-back {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  color: #333;
+  transform: rotateY(180deg); /* Initially hidden */
+  border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+/* 🔄 Flipped Card Animation */
+.card.flipped .card-front {
+  transform: rotateY(-180deg); /* Hide front */
+}
+
+.card.flipped .card-back {
+  transform: rotateY(0deg); /* Show back */
+}
+
+/* ✅ Matched Card Styling */
+.card.matched .card-front {
+  transform: rotateY(-180deg);
+}
+
+.card.matched .card-back {
+  transform: rotateY(0deg);
+  background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%);
+  animation: matchedGlow 0.8s ease-in-out;
+}
+
+@keyframes matchedGlow {
+  0% { 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: rotateY(0deg) scale(1);
+  }
+  50% { 
+    box-shadow: 0 8px 25px rgba(168, 230, 207, 0.6);
+    transform: rotateY(0deg) scale(1.1);
+  }
+  100% { 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+/* 🎯 Card Hover Effects */
+.card:hover .card-front {
+  transform: rotateY(-10deg) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card.flipped:hover .card-back,
+.card.matched:hover .card-back {
+  transform: rotateY(0deg) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 📋 Game Instructions */
+.game-instructions {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.game-instructions h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.game-instructions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-instructions li {
+  margin: 8px 0;
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #ff6b6b;
+}
+
+/* 📱 Responsive Design for Mobile */
+@media (max-width: 600px) {
+  .card-game {
+    padding: 15px;
+    margin: 10px;
+  }
+  
+  .game-board {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on mobile */
+    gap: 10px;
+    padding: 15px;
+  }
+  
+  .card {
+    width: 80px;
+    height: 100px;
+  }
+  
+  .card-front,
+  .card-back {
+    font-size: 2em;
+  }
+  
+  .game-stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .game-header h2 {
+    font-size: 2em;
+  }
+}
+
+/* 🎨 Symbol Styling */
+.card-symbol {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  user-select: none; /* Prevent text selection */
+}
