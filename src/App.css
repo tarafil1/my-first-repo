@@ -1,0 +1,803 @@
+/* Reset and basic setup */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main App Container - Sleek Dark Theme */
+.App {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+/* App Header - Modern Dark Styling */
+.App-header {
+  text-align: center;
+  color: var(--text-primary);
+  padding: 2rem 1rem 1rem 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.App-header h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
+.App-header p {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Tab Navigation - Sleek Dark Design */
+.tab-navigation {
+  display: flex;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  padding: 1.5rem;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-button {
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.025em;
+}
+
+.tab-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: var(--background-dark);
+  border: 1px solid var(--primary-color);
+  box-shadow: var(--shadow-elevated);
+  font-weight: 600;
+}
+
+/* Tab Content Area */
+.tab-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  min-height: calc(100vh - 200px);
+}
+
+/* Welcome tab styles - Modern Dark */
+.App-main {
+  max-width: 800px;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.card {
+  background: var(--background-card);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevated);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.count-button {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: var(--background-dark);
+  border: none;
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  margin: 1rem 0;
+  letter-spacing: 0.025em;
+}
+
+.count-button:hover {
+  background: linear-gradient(135deg, var(--primary-hover), #00e67a);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.hint {
+  font-style: italic;
+  opacity: 0.8;
+  margin-top: 1rem;
+}
+
+.features, .next-steps {
+  background: var(--background-elevated);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow);
+}
+
+.features ul {
+  list-style: none;
+  text-align: left;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.features li {
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+code {
+  background: var(--background-elevated);
+  color: var(--accent-color);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Game Info Header - Dark Theme */
+.game-info {
+  text-align: center;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  z-index: 100;
+}
+
+.game-info h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.game-info p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+/* Game Box - Modern Dark Container */
+.game-box {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  background: var(--background-card);
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  border-radius: 24px;
+  box-shadow: 
+    var(--shadow-elevated),
+    inset 0 0 40px rgba(0, 212, 255, 0.05);
+  backdrop-filter: blur(20px);
+  overflow: hidden; /* Keeps balls inside the container */
+}
+
+/* Physics Ball Styling */
+.physics-ball {
+  position: absolute;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  transition: transform 0.1s ease;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent 50%);
+}
+
+.physics-ball:hover {
+  transform: scale(1.1);
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.physics-ball:active {
+  transform: scale(0.95);
+}
+
+/* ⚡ LIGHTNING EFFECT - Spectacular electric aura when hitting walls! */
+.lightning-effect {
+  animation: lightning-pulse 0.15s ease-in-out;
+  box-shadow: 
+    0 0 20px #00ffff,
+    0 0 40px #00ffff,
+    0 0 60px #00ffff,
+    0 0 80px #00ffff,
+    inset 0 0 20px rgba(255, 255, 255, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Lightning pulse animation */
+@keyframes lightning-pulse {
+  0% {
+    box-shadow: 
+      0 0 5px #00ffff,
+      0 0 10px #00ffff,
+      0 0 15px #00ffff,
+      0 0 20px #00ffff,
+      inset 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px #00ffff,
+      0 0 50px #00ffff,
+      0 0 70px #00ffff,
+      0 0 90px #00ffff,
+      0 0 110px #00ffff,
+      inset 0 0 30px rgba(255, 255, 255, 1);
+    transform: scale(1.15);
+  }
+  100% {
+    box-shadow: 
+      0 0 20px #00ffff,
+      0 0 40px #00ffff,
+      0 0 60px #00ffff,
+      0 0 80px #00ffff,
+      inset 0 0 20px rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .game-box {
+    width: 350px;
+    height: 250px;
+    border-width: 3px;
+  }
+  
+  .game-info h2 {
+    font-size: 1.5rem;
+  }
+  
+  .game-info p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-box {
+    width: 300px;
+    height: 200px;
+    border-width: 2px;
+  }
+  
+  .game-info {
+    margin-bottom: 15px;
+  }
+  
+  .game-info h2 {
+    font-size: 1.3rem;
+  }
+  
+  .game-info p {
+    font-size: 0.9rem;
+  }
+}
+
+/* ================================= */
+/* 🐍 SNAKE GAME STYLES */
+/* ================================= */
+
+.snake-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Snake Game Header */
+.snake-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.snake-header h2 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.snake-score {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-shadow: none;
+}
+
+/* ⚡ Active Power-ups Display */
+.active-powerups {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.powerups-label {
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.active-powerup {
+  display: inline-flex;
+  align-items: center;
+  background: var(--background-elevated);
+  border-radius: var(--border-radius);
+  padding: 8px 14px;
+  margin: 4px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: active-powerup-glow 2s infinite ease-in-out;
+  box-shadow: var(--shadow);
+}
+
+.powerup-icon {
+  font-size: 1.2rem;
+  margin-right: 6px;
+}
+
+.powerup-name {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-right: 6px;
+}
+
+.powerup-timer {
+  font-size: 0.8rem;
+  color: #FFD700;
+  font-weight: bold;
+}
+
+/* Game Controls */
+.snake-controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.snake-btn {
+  padding: 14px 26px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, var(--accent-color), #00cc70);
+  color: var(--background-dark);
+  border: 1px solid var(--accent-color);
+}
+
+.start-btn:hover {
+  background: linear-gradient(135deg, #00e67a, #00b359);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.pause-btn {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: var(--background-dark);
+  border: 1px solid var(--primary-color);
+}
+
+.pause-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #00b8e6, #0099cc);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.pause-btn:disabled {
+  background: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.5;
+  border-color: var(--text-muted);
+}
+
+/* Game Messages */
+.snake-message {
+  padding: 15px 25px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.game-over {
+  background: linear-gradient(45deg, #f44336, #ef5350);
+  color: white;
+  animation: pulse 1s infinite;
+}
+
+.paused {
+  background: linear-gradient(45deg, #FF9800, #FFB74D);
+  color: white;
+}
+
+.snake-instructions {
+  background: var(--background-card);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow);
+}
+
+.snake-instructions p {
+  margin: 8px 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* Game Board - Dark Theme */
+.snake-board {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  gap: 1px;
+  background: var(--background-dark);
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  border-radius: var(--border-radius);
+  padding: 8px;
+  box-shadow: 
+    var(--shadow-elevated),
+    inset 0 0 20px rgba(0, 212, 255, 0.05);
+}
+
+/* Individual grid cells - Dark Theme */
+.snake-cell {
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 3px;
+  transition: all 0.1s ease;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Snake head styling */
+.snake-head {
+  background: linear-gradient(45deg, #4CAF50, #66BB6A);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 10px rgba(76, 175, 80, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  animation: snake-head-glow 1s infinite ease-in-out;
+}
+
+/* Dead snake head styling */
+.snake-head-dead {
+  background: linear-gradient(45deg, #666, #888);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 10px rgba(102, 102, 102, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+/* Snake body styling */
+.snake-body {
+  background: linear-gradient(45deg, #388E3C, #4CAF50);
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+/* Food styling */
+.snake-food {
+  background: linear-gradient(45deg, #f44336, #ff6b6b);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 15px rgba(244, 67, 54, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  animation: food-pulse 1.5s infinite ease-in-out;
+}
+
+/* 🚧 OBSTACLE STYLING */
+.snake-obstacle {
+  background: linear-gradient(45deg, #424242, #616161);
+  border-radius: 3px;
+  box-shadow: 
+    0 0 8px rgba(66, 66, 66, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid #757575;
+  position: relative;
+}
+
+/* ⚡ POWER-UP STYLING */
+.snake-powerup {
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: powerup-pulse 2s infinite ease-in-out;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.powerup-emoji {
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: powerup-rotate 3s linear infinite;
+}
+
+/* Individual power-up type styling */
+.snake-powerup-slow_motion {
+  background: radial-gradient(circle, #2196F3, #1976D2);
+  box-shadow: 
+    0 0 15px rgba(33, 150, 243, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.snake-powerup-score_boost {
+  background: radial-gradient(circle, #FFD700, #FFA000);
+  box-shadow: 
+    0 0 15px rgba(255, 215, 0, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.snake-powerup-speed_boost {
+  background: radial-gradient(circle, #FF4081, #E91E63);
+  box-shadow: 
+    0 0 15px rgba(255, 64, 129, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.snake-powerup-invincibility {
+  background: radial-gradient(circle, #9C27B0, #7B1FA2);
+  box-shadow: 
+    0 0 15px rgba(156, 39, 176, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.snake-obstacle::before {
+  content: '⚠️';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+/* 💥 COLLISION INDICATORS */
+/* Wall collision styling */
+.collision-wall {
+  background: linear-gradient(45deg, #ff1744, #ff5722);
+  border-radius: 4px;
+  box-shadow: 
+    0 0 20px rgba(255, 23, 68, 1),
+    0 0 40px rgba(255, 23, 68, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  animation: collision-flash 0.5s infinite ease-in-out;
+  border: 2px solid #fff;
+}
+
+/* Self collision styling */
+.collision-self {
+  background: linear-gradient(45deg, #9c27b0, #e91e63);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 20px rgba(156, 39, 176, 1),
+    0 0 40px rgba(156, 39, 176, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  animation: collision-flash 0.5s infinite ease-in-out;
+  border: 2px solid #fff;
+}
+
+/* Obstacle collision styling */
+.collision-obstacle {
+  background: linear-gradient(45deg, #ff6f00, #ffb300);
+  border-radius: 3px;
+  box-shadow: 
+    0 0 20px rgba(255, 111, 0, 1),
+    0 0 40px rgba(255, 111, 0, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  animation: collision-flash 0.5s infinite ease-in-out;
+  border: 2px solid #fff;
+}
+
+/* Animations */
+@keyframes snake-head-glow {
+  0%, 100% {
+    box-shadow: 
+      0 0 10px rgba(76, 175, 80, 0.8),
+      inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 0 20px rgba(76, 175, 80, 1),
+      inset 0 2px 4px rgba(255, 255, 255, 0.5);
+  }
+}
+
+@keyframes food-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 
+      0 0 15px rgba(244, 67, 54, 0.8),
+      inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 
+      0 0 25px rgba(244, 67, 54, 1),
+      inset 0 2px 4px rgba(255, 255, 255, 0.5);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Collision flash animation */
+@keyframes collision-flash {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* Power-up animations */
+@keyframes powerup-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.8),
+      inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 
+      0 0 25px rgba(255, 255, 255, 1),
+      inset 0 2px 4px rgba(255, 255, 255, 0.5);
+  }
+}
+
+@keyframes powerup-rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes active-powerup-glow {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(255, 255, 255, 0.3),
+      inset 0 0 5px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.6),
+      inset 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Responsive Snake Game */
+@media (max-width: 768px) {
+  .snake-board {
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+  }
+  
+  .snake-cell {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .snake-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .snake-score {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .snake-board {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    padding: 6px;
+  }
+  
+  .snake-cell {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .snake-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .snake-score {
+    font-size: 1rem;
+  }
+  
+  .snake-btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+}

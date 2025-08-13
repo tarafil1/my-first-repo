@@ -1,0 +1,240 @@
+/* 📚 LEARNING: Tetris Game Styling */
+/* This CSS creates the visual layout for our Tetris game */
+
+.tetris-game {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+}
+
+/* 📚 LEARNING: Game Header Styling */
+.tetris-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.tetris-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 2rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.game-info {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 10px;
+}
+
+.score, .status {
+  padding: 10px 18px;
+  background: var(--background-card);
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+
+.score {
+  color: var(--primary-color);
+}
+
+.status {
+  color: var(--accent-color);
+}
+
+/* 📚 LEARNING: Main Game Container */
+.tetris-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+/* 📚 LEARNING: Game Board Styling - Dark Theme */
+/* The board is made of a grid of cells, each representing one block space */
+.tetris-board {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  border-radius: var(--border-radius);
+  background: var(--background-dark);
+  padding: 4px;
+  box-shadow: 
+    var(--shadow-elevated),
+    inset 0 0 20px rgba(0, 212, 255, 0.05);
+}
+
+.tetris-row {
+  display: flex;
+}
+
+.tetris-cell {
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-sizing: border-box;
+  /* Color will be set dynamically via inline styles */
+}
+
+/* 📚 LEARNING: Controls Panel */
+.tetris-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 200px;
+}
+
+.control-info {
+  background: var(--background-card);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow);
+}
+
+.control-info h3 {
+  margin: 0 0 15px 0;
+  color: var(--primary-color);
+  text-align: center;
+  font-weight: 600;
+}
+
+.control-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.control-info li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.control-info li:last-child {
+  border-bottom: none;
+}
+
+/* 📚 LEARNING: Button Styling - Dark Theme */
+.restart-button, .pause-button {
+  padding: 14px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.restart-button {
+  background: linear-gradient(135deg, #ff4757, #c44569);
+  color: white;
+  border: 1px solid #ff4757;
+  box-shadow: var(--shadow);
+}
+
+.restart-button:hover {
+  background: linear-gradient(135deg, #ff6b7a, #d63384);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.pause-button {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: var(--background-dark);
+  border: 1px solid var(--primary-color);
+  box-shadow: var(--shadow);
+}
+
+.pause-button:hover {
+  background: linear-gradient(135deg, #00b8e6, #0099cc);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevated);
+}
+
+/* 📚 LEARNING: Instructions - Dark Theme */
+.tetris-instructions {
+  text-align: center;
+  background: var(--background-card);
+  padding: 18px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 20px;
+  box-shadow: var(--shadow);
+}
+
+.tetris-instructions p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* 📚 LEARNING: Responsive Design */
+/* Make the game work on smaller screens */
+@media (max-width: 768px) {
+  .tetris-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .tetris-controls {
+    min-width: auto;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .game-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .tetris-cell {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* 📚 LEARNING: Visual Effects - Dark Theme */
+/* Add some subtle animations and effects */
+.tetris-board {
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 
+      var(--shadow-elevated),
+      inset 0 0 20px rgba(0, 212, 255, 0.03);
+  }
+  to {
+    box-shadow: 
+      var(--shadow-elevated),
+      inset 0 0 30px rgba(0, 212, 255, 0.08),
+      0 0 40px rgba(0, 212, 255, 0.1);
+  }
+}
+
+/* 📚 LEARNING: Game State Visual Feedback */
+.tetris-game[data-game-over="true"] .tetris-board {
+  animation: none;
+  box-shadow: 0 0 30px rgba(255, 71, 87, 0.4);
+  border-color: #ff4757;
+}
+
+.tetris-game[data-paused="true"] .tetris-board {
+  opacity: 0.6;
+  filter: grayscale(70%) brightness(0.8);
+}
