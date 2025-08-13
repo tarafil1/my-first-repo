@@ -4,6 +4,7 @@ import SnakeGame from './SnakeGame'
 import TetrisGame from './TetrisGame'
 import RockPaperScissors from './RockPaperScissors'
 import CardGame from './CardGame'
+import MoodBoard from './MoodBoard'
 
 function App() {
   // 📚 LEARNING: Tab system state management
@@ -55,14 +56,15 @@ function App() {
                 <li>🔧 ESLint for code quality</li>
                 <li>🐍 Snake Game for fun!</li>
                 <li>🧩 Tetris Game</li>
-                <li>🪨📄✂️ Rock Paper Scissors - NEW!</li>
-                <li>🎴 Memory Card Game - NEW!</li>
+                <li>🪨📄✂️ Rock Paper Scissors</li>
+                <li>🎴 Memory Card Game</li>
+                <li>🎨 Moodboard Creator - NEW!</li>
               </ul>
             </div>
 
             <div className="next-steps">
               <h2>🚀 Next Steps</h2>
-              <p>Try all four games: Snake, Tetris, Rock Paper Scissors, and the brand new Memory Card game!</p>
+              <p>Try all the games and create your own visual inspiration with the new Moodboard Creator! Drag images from your computer to build beautiful collages.</p>
             </div>
           </main>
         )
@@ -78,6 +80,9 @@ function App() {
       
       case 'cards':
         return <CardGame />
+      
+      case 'moodboard':
+        return <MoodBoard />
       
       default:
         return <div>Tab not found</div>
@@ -125,6 +130,12 @@ function App() {
           onClick={() => handleTabClick('cards')}
         >
           🎴 Card Game
+        </button>
+        <button 
+          className={`tab-button ${activeTab === 'moodboard' ? 'active' : ''}`}
+          onClick={() => handleTabClick('moodboard')}
+        >
+          🎨 Moodboard
         </button>
       </nav>
 
