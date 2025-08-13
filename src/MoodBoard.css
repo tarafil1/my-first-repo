@@ -166,6 +166,9 @@
   overflow: hidden;
   border: 2px solid transparent;
   box-shadow: var(--shadow);
+  /* 📚 LEARNING: Ensure images appear vibrant and not washed out */
+  opacity: 1;
+  filter: contrast(1.02) saturate(1.05) brightness(1);
 }
 
 .moodboard-image:hover {
@@ -199,6 +202,10 @@
   display: block;
   user-select: none;
   pointer-events: none;
+  /* 📚 LEARNING: Ensure images are vibrant and not greyed out */
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
 }
 
 /* Delete Button */
@@ -299,6 +306,166 @@
   .moodboard-empty h3 {
     font-size: 1.8rem;
   }
+}
+
+/* ================================= */
+/* 📁 EXPORT DROPDOWN STYLES - Top-right positioned */
+/* ================================= */
+
+.export-dropdown-container {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 100;
+}
+
+.export-toggle-btn {
+  background: rgba(128, 128, 128, 0.1);
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 80px;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.export-toggle-btn:hover {
+  background: rgba(128, 128, 128, 0.15);
+  border-color: rgba(128, 128, 128, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.export-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: rgba(40, 40, 40, 0.95);
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  min-width: 120px;
+  animation: dropdown-appear 0.2s ease-out;
+}
+
+@keyframes dropdown-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.export-option {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+}
+
+.export-option:last-child {
+  border-bottom: none;
+}
+
+.export-option:hover {
+  background: rgba(128, 128, 128, 0.1);
+  color: rgba(255, 255, 255, 1);
+  transform: translateX(2px);
+}
+
+.export-jpeg-option:hover {
+  background: rgba(0, 150, 255, 0.1);
+  color: #66ccff;
+}
+
+.export-pdf-option:hover {
+  background: rgba(255, 100, 100, 0.1);
+  color: #ff9999;
+}
+
+/* Responsive export dropdown */
+@media (max-width: 480px) {
+  .export-dropdown-container {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .export-toggle-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    min-width: 70px;
+  }
+  
+  .export-dropdown {
+    min-width: 100px;
+  }
+  
+  .export-option {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ================================= */
+/* 📁 EXPORT SPECIFIC STYLES */
+/* ================================= */
+
+/* 📚 LEARNING: During export, we want to ensure images appear exactly as they should */
+/* This class can be temporarily added during export if needed */
+.moodboard-canvas.exporting .moodboard-image {
+  transform: none !important; /* Remove any hover transforms */
+  transition: none !important; /* Remove transitions during capture */
+  /* 📚 LEARNING: Maintain image vibrancy during export */
+  opacity: 1 !important;
+  filter: contrast(1.02) saturate(1.05) brightness(1) !important;
+}
+
+.moodboard-canvas.exporting .moodboard-image:hover {
+  transform: none !important;
+  border-color: transparent !important;
+  box-shadow: var(--shadow) !important; /* Keep original shadow */
+  /* 📚 LEARNING: Ensure hover states don't affect export image quality */
+  filter: contrast(1.02) saturate(1.05) brightness(1) !important;
+}
+
+.moodboard-canvas.exporting .moodboard-image img {
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+.moodboard-canvas.exporting .delete-image-btn {
+  opacity: 0 !important; /* Hide delete buttons in export */
 }
 
 /* Animation for new images */

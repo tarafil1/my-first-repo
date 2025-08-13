@@ -1,5 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
 import './MoodBoard.css'
+// 📚 LEARNING: Import libraries for export functionality
+// html2canvas - converts HTML elements to images
+// jsPDF - creates PDF documents
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 function MoodBoard() {
   // 📚 LEARNING: State for managing images on the moodboard
@@ -12,6 +17,9 @@ function MoodBoard() {
   
   // 📚 LEARNING: Track which image is currently selected for keyboard deletion
   const [selectedImage, setSelectedImage] = useState(null)
+  
+  // 📚 LEARNING: State for export dropdown visibility
+  const [showExportDropdown, setShowExportDropdown] = useState(false)
   
   const boardRef = useRef(null)
 
@@ -144,6 +152,177 @@ function MoodBoard() {
     setImages([])
   }
 
+  // 📚 LEARNING: Export moodboard as JPEG
+  const handleExportJPEG = async () => {
+    try {
+      // Show user that export is happening
+      console.log('Starting JPEG export...')
+      
+      // Get the moodboard canvas element
+      const canvas = boardRef.current
+      if (!canvas) {
+        alert('Unable to export: moodboard not found')
+        return
+      }
+
+      // Check if there are any images to export
+      if (images.length === 0) {
+        alert('Please add some images to your moodboard before exporting!')
+        return
+      }
+
+      // 📚 LEARNING: Prepare canvas for clean export
+      // Find and temporarily hide the export dropdown
+      const exportDropdown = canvas.querySelector('.export-dropdown-container')
+      const originalDisplay = exportDropdown ? exportDropdown.style.display : null
+      if (exportDropdown) {
+        exportDropdown.style.display = 'none'
+      }
+
+      // Add exporting class to clean up hover effects and buttons
+      canvas.classList.add('exporting')
+
+      // Also close any open dropdown to be safe
+      setShowExportDropdown(false)
+
+      // Small delay to ensure UI updates before capture
+      await new Promise(resolve => setTimeout(resolve, 150))
+
+      // Use html2canvas to capture the moodboard as an image
+      // This "takes a screenshot" of the HTML element
+      const screenshot = await html2canvas(canvas, {
+        backgroundColor: '#1a1a1a', // Match your dark theme
+        scale: 2, // Higher quality (2x resolution)
+        useCORS: true, // Allow cross-origin images
+        allowTaint: true,
+        // 📚 LEARNING: Ensure image quality and prevent greying
+        foreignObjectRendering: false, // Better image rendering
+        imageTimeout: 15000, // More time for image loading
+        removeContainer: false,
+        // 📚 LEARNING: Ignore elements with specific classes
+        ignoreElements: (element) => {
+          return element.classList.contains('export-dropdown-container') ||
+                 element.classList.contains('export-toggle-btn') ||
+                 element.classList.contains('export-dropdown')
+        }
+      })
+
+      // 📚 LEARNING: Restore export controls visibility and remove exporting class
+      canvas.classList.remove('exporting')
+      if (exportDropdown && originalDisplay !== null) {
+        exportDropdown.style.display = originalDisplay
+      } else if (exportDropdown) {
+        exportDropdown.style.display = ''
+      }
+
+      // Convert the canvas to a data URL (base64 image)
+      const imageData = screenshot.toDataURL('image/jpeg', 0.9) // 90% quality
+
+      // Create a download link and trigger it
+      const downloadLink = document.createElement('a')
+      downloadLink.href = imageData
+      downloadLink.download = `moodboard-${new Date().toISOString().slice(0, 10)}.jpg`
+      document.body.appendChild(downloadLink)
+      downloadLink.click()
+      document.body.removeChild(downloadLink)
+
+      console.log('JPEG export completed!')
+    } catch (error) {
+      console.error('Error exporting JPEG:', error)
+      alert('Failed to export JPEG. Please try again.')
+    }
+  }
+
+  // 📚 LEARNING: Export moodboard as PDF
+  const handleExportPDF = async () => {
+    try {
+      // Show user that export is happening
+      console.log('Starting PDF export...')
+      
+      // Get the moodboard canvas element
+      const canvas = boardRef.current
+      if (!canvas) {
+        alert('Unable to export: moodboard not found')
+        return
+      }
+
+      // Check if there are any images to export
+      if (images.length === 0) {
+        alert('Please add some images to your moodboard before exporting!')
+        return
+      }
+
+      // 📚 LEARNING: Prepare canvas for clean export (same as JPEG)
+      const exportDropdown = canvas.querySelector('.export-dropdown-container')
+      const originalDisplay = exportDropdown ? exportDropdown.style.display : null
+      if (exportDropdown) {
+        exportDropdown.style.display = 'none'
+      }
+
+      // Add exporting class to clean up hover effects and buttons
+      canvas.classList.add('exporting')
+
+      // Also close any open dropdown to be safe
+      setShowExportDropdown(false)
+
+      // Small delay to ensure UI updates before capture
+      await new Promise(resolve => setTimeout(resolve, 150))
+
+      // First, capture the moodboard as an image (same as JPEG export)
+      const screenshot = await html2canvas(canvas, {
+        backgroundColor: '#1a1a1a',
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        // 📚 LEARNING: Ensure image quality and prevent greying
+        foreignObjectRendering: false, // Better image rendering
+        imageTimeout: 15000, // More time for image loading
+        removeContainer: false,
+        // 📚 LEARNING: Ignore export control elements
+        ignoreElements: (element) => {
+          return element.classList.contains('export-dropdown-container') ||
+                 element.classList.contains('export-toggle-btn') ||
+                 element.classList.contains('export-dropdown')
+        }
+      })
+
+      // 📚 LEARNING: Restore export controls visibility and remove exporting class
+      canvas.classList.remove('exporting')
+      if (exportDropdown && originalDisplay !== null) {
+        exportDropdown.style.display = originalDisplay
+      } else if (exportDropdown) {
+        exportDropdown.style.display = ''
+      }
+
+      // Get the dimensions of the captured image
+      const imgWidth = screenshot.width
+      const imgHeight = screenshot.height
+
+      // Create a new PDF document
+      // We'll use landscape orientation if the moodboard is wider than it is tall
+      const isLandscape = imgWidth > imgHeight
+      const pdf = new jsPDF({
+        orientation: isLandscape ? 'landscape' : 'portrait',
+        unit: 'px',
+        format: [imgWidth, imgHeight]
+      })
+
+      // Convert the screenshot to a format jsPDF can use
+      const imageData = screenshot.toDataURL('image/jpeg', 0.9)
+
+      // Add the image to the PDF (fill the entire page)
+      pdf.addImage(imageData, 'JPEG', 0, 0, imgWidth, imgHeight)
+
+      // Download the PDF
+      pdf.save(`moodboard-${new Date().toISOString().slice(0, 10)}.pdf`)
+
+      console.log('PDF export completed!')
+    } catch (error) {
+      console.error('Error exporting PDF:', error)
+      alert('Failed to export PDF. Please try again.')
+    }
+  }
+
   return (
     <div className="moodboard-container">
       {/* Main Moodboard Canvas */}
@@ -159,9 +338,51 @@ function MoodBoard() {
           // If clicking on empty canvas (not on an image), deselect any selected image
           if (e.target === e.currentTarget) {
             setSelectedImage(null)
+            setShowExportDropdown(false) // Close export dropdown when clicking canvas
           }
         }}
       >
+        
+        {/* 📚 LEARNING: Export Dropdown - Top-right positioned, only show when there are images */}
+        {images.length > 0 && (
+          <div className="export-dropdown-container">
+            <button 
+              className="export-toggle-btn"
+              onClick={(e) => {
+                e.stopPropagation() // Prevent canvas click from closing
+                setShowExportDropdown(!showExportDropdown)
+              }}
+              title="Export your moodboard"
+            >
+              Export ⬇
+            </button>
+            
+            {showExportDropdown && (
+              <div className="export-dropdown">
+                <button 
+                  className="export-option export-jpeg-option" 
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleExportJPEG()
+                    setShowExportDropdown(false)
+                  }}
+                >
+                  📷 JPEG
+                </button>
+                <button 
+                  className="export-option export-pdf-option" 
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleExportPDF()
+                    setShowExportDropdown(false)
+                  }}
+                >
+                  📄 PDF
+                </button>
+              </div>
+            )}
+          </div>
+        )}
         
         {/* Minimal empty state */}
         {images.length === 0 && (
