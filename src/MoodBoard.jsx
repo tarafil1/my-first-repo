@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './MoodBoard.css'
 
 function MoodBoard() {
@@ -9,7 +9,35 @@ function MoodBoard() {
   // 📚 LEARNING: Refs for tracking drag state
   const [draggedImage, setDraggedImage] = useState(null)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
+  
+  // 📚 LEARNING: Track which image is currently selected for keyboard deletion
+  const [selectedImage, setSelectedImage] = useState(null)
+  
   const boardRef = useRef(null)
+
+  // 📚 LEARNING: Keyboard event listener for deleting selected images
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // If backspace is pressed and we have a selected image, delete it
+      if (e.key === 'Backspace' && selectedImage) {
+        e.preventDefault() // Prevent browser back navigation
+        handleDeleteImage(selectedImage)
+        setSelectedImage(null) // Clear selection after deletion
+      }
+      // Clear selection on Escape key
+      if (e.key === 'Escape') {
+        setSelectedImage(null)
+      }
+    }
+
+    // Add event listener to document
+    document.addEventListener('keydown', handleKeyDown)
+    
+    // Cleanup function to remove event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [selectedImage]) // Re-run effect when selectedImage changes
 
   // 📚 LEARNING: Handle drag over event (required for drop to work)
   const handleDragOver = (e) => {
@@ -56,9 +84,12 @@ function MoodBoard() {
     })
   }
 
-  // 📚 LEARNING: Start dragging an existing image
+  // 📚 LEARNING: Handle image selection and start dragging
   const handleImageMouseDown = (e, imageId) => {
     e.preventDefault()
+    
+    // Select the image for keyboard operations
+    setSelectedImage(imageId)
     
     // Find the image being dragged
     const image = images.find(img => img.id === imageId)
@@ -124,12 +155,17 @@ function MoodBoard() {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp} // Stop dragging if mouse leaves board
+        onClick={(e) => {
+          // If clicking on empty canvas (not on an image), deselect any selected image
+          if (e.target === e.currentTarget) {
+            setSelectedImage(null)
+          }
+        }}
       >
         
         {/* Minimal empty state */}
         {images.length === 0 && (
           <div className="moodboard-empty">
-            <div className="drop-zone-icon">🖼️</div>
             <h3>Drop Images Here</h3>
           </div>
         )}
@@ -138,7 +174,7 @@ function MoodBoard() {
         {images.map((image) => (
           <div
             key={image.id}
-            className={`moodboard-image ${draggedImage === image.id ? 'dragging' : ''}`}
+            className={`moodboard-image ${draggedImage === image.id ? 'dragging' : ''} ${selectedImage === image.id ? 'selected' : ''}`}
             style={{
               left: image.x,
               top: image.y,
